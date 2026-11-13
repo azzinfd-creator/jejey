@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111019">
+<title>buat jeje.</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark}
+body{
+  min-height:100vh;margin:0;padding:24px;display:grid;place-items:center;
+  overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:#eee8f2;background:#0c0b12;position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:-35%;
+  background:
+    radial-gradient(ellipse at 18% 25%,rgba(117,62,133,.38),transparent 38%),
+    radial-gradient(ellipse at 82% 28%,rgba(48,82,125,.30),transparent 40%),
+    radial-gradient(ellipse at 55% 85%,rgba(135,66,105,.25),transparent 42%),
+    linear-gradient(135deg,#100e19,#171321 48%,#0b111b);
+  background-size:140% 140%;
+  animation:nightGlow 16s ease-in-out infinite alternate;
+  z-index:-2;
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  opacity:.16;
+  background-image:radial-gradient(rgba(255,255,255,.55) .6px,transparent .7px);
+  background-size:5px 5px;
+  mask-image:linear-gradient(transparent,black 25%,black 75%,transparent);
+}
+@keyframes nightGlow{
+  0%{transform:translate3d(-2%,0,0) scale(1);filter:hue-rotate(0deg)}
+  100%{transform:translate3d(2%,1%,0) scale(1.08);filter:hue-rotate(18deg)}
+}
+.card{
+  width:min(100%,390px);padding:34px 27px;text-align:center;
+  border:1px solid rgba(222,194,235,.15);border-radius:22px;
+  background:linear-gradient(145deg,rgba(36,29,47,.82),rgba(20,25,39,.76));
+  box-shadow:0 22px 70px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.05);
+  backdrop-filter:blur(18px);
+  animation:cardIn .9s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#b59ac4;margin:0 0 18px}
+h1{font-size:29px;font-weight:600;letter-spacing:-.04em;color:#f0e5f4;margin:0 0 17px}
+p{font-size:14px;line-height:1.85;color:#c9bfce;margin:0 0 23px}
+button{
+  border:1px solid rgba(226,195,239,.22);border-radius:999px;padding:12px 20px;
+  color:#f6edf8;background:linear-gradient(110deg,#76527f,#555d87);
+  font:inherit;font-size:13px;cursor:pointer;
+  box-shadow:0 7px 24px rgba(88,61,112,.24);
+  transition:transform .25s,filter .25s,box-shadow .25s;
+}
+button:hover{transform:translateY(-2px);filter:brightness(1.15);box-shadow:0 10px 28px rgba(113,80,145,.32)}
+button:active{transform:scale(.97)}
+#message{
+  display:none;margin-top:22px;padding:18px 17px;border-radius:15px;
+  border:1px solid rgba(220,194,231,.12);
+  background:linear-gradient(135deg,rgba(91,63,105,.25),rgba(54,69,101,.23));
+  color:#e1d5e7;font-size:14px;line-height:1.9;
+}
+#message.show{display:block;animation:messageIn .55s ease both}
+@keyframes messageIn{from{opacity:0;transform:translateY(9px);filter:blur(3px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.sign{margin-top:13px;color:#b69ac5;font-size:12px}
+.small{margin-top:25px!important;margin-bottom:0!important;font-size:11px!important;color:#81778b!important;letter-spacing:.04em}
+.spark{
+  position:fixed;width:3px;height:3px;border-radius:50%;background:#e8d6f5;
+  opacity:0;box-shadow:0 0 10px 2px rgba(210,174,235,.55);
+  animation:twinkle 4s ease-in-out infinite;pointer-events:none;
+}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.7;transform:scale(1.4)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="kicker">just a little note</div>
+  <h1>hai, jeje.</h1>
+  <p>
+    hari ini capek banget ya kayaknya?
+    gapppa, ga harus maksa diri buat selalu baik-baik aja.
+    istirahat dulu bentar, jangan terlalu dipikirin semuanya.
+  </p>
+  <button id="openMessage" type="button">ada pesan buat kamu</button>
+  <div id="message" aria-live="polite">
+    hey, jangan lupa jaga diri sendiri juga ya.
+    kalau mau cerita, cerita aja. kalau mau diem dulu juga gapppa.
+    aku mungkin ga selalu punya solusi, tapi aku mau dengerin.
+    <div class="sign">— dari aku.</div>
+  </div>
+  <p class="small">take it slow. one thing at a time.</p>
+</main>
+<script>
+const button=document.getElementById("openMessage");
+const message=document.getElementById("message");
+button.addEventListener("click",()=>{
+  const open=message.classList.toggle("show");
+  button.textContent=open?"tutup dulu":"ada pesan buat kamu";
+});
+for(let i=0;i<24;i++){
+  const dot=document.createElement("i");
+  dot.className="spark";
+  dot.style.left=Math.random()*100+"vw";
+  dot.style.top=Math.random()*100+"vh";
+  dot.style.animationDelay=(Math.random()*4)+"s";
+  dot.style.animationDuration=(3+Math.random()*4)+"s";
+  document.body.appendChild(dot);
+}
+</script>
+</body>
+</html>
